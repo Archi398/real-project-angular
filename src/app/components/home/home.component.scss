@@ -1,0 +1,63 @@
+mat-card {
+    margin-top: 0.5rem;
+}
+
+span.completed {
+    text-decoration: line-through;
+    padding-left: 6px;
+}
+
+span {
+    color: white;
+}
+
+mat-list-item {
+    position: relative;
+    border-bottom: 1px solid #dfdfdf;
+    .delete-todo-btn {
+        display: none;
+        position: absolute;
+        right: 0;
+    }
+    &:hover {
+        .delete-todo-btn {
+            display: inline;
+        }
+    }
+}
+
+mat-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    @media screen and (max-width: 375px){
+        margin-right: 0;
+    }
+}
+
+.icon-cross {
+    color: white;
+}
+
+mat-radio-button {
+    color: white;
+}
+
+.filter-container {
+    button {
+        padding: 0 2px;
+        &.active-filter {
+            color: #481C4B;
+        }
+    }
+
+    &.filter-container--mobile {
+        margin-top: 1rem;
+    }
+}
+.btn-bottom{
+    margin-right: 5px;
+margin-left: 5px;
+}
+

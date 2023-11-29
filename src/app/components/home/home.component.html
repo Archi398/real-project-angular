@@ -1,0 +1,43 @@
+<app-add-todo (update)="getTodos()"></app-add-todo>
+<mat-card> 
+  <mat-card-content>
+    <mat-list role="list" *ngIf="filteredTodos$">
+      <mat-list-item role="listitem"  *ngFor="let item of filteredTodos$ | async">
+          <ng-container *ngIf="item.isCompleted; else elseBlock">
+            <mat-icon class="icon-check" svgIcon="icon-check" (click)="setAsNotCompleted(item)" clickable ></mat-icon>
+            <span class="completed">{{item.title}}</span>
+          </ng-container>
+          <ng-template #elseBlock>          
+            <mat-radio-button (change)="setAsCompleted(item)" [checked]="item.isCompleted" [disabled]="item.isCompleted">
+              {{item.title}}
+            </mat-radio-button>
+          </ng-template>
+          <button class="delete-todo-btn" mat-icon-button aria-label="Deleting Todo" (click)="deleteTodo(item)">
+            <mat-icon class="icon-cross" svgIcon="icon-cross"></mat-icon>
+          </button>
+      </mat-list-item>
+    </mat-list>
+    
+  </mat-card-content> 
+  <mat-card-footer style="white-space: nowrap;">
+    <span>{{totalActiveTodos}} Taches a faire  </span>    
+    <div class="filter-container" *ngIf="!isSmallScreen">
+      
+      <button mat-flat-button class="btn btn-bottom" [ngClass]="{'active-filter': isFilterActive(FilterState.ALL)}"  (click)="setFilterState(FilterState.ALL)" style="border: solid 2px #481C4B">Tout</button>
+      <button mat-flat-button class="btn btn-bottom" [ngClass]="{'active-filter': isFilterActive(FilterState.ACTIVE)}" (click)="setFilterState(FilterState.ACTIVE)" style="border: solid 2px #481C4B">En cours</button>
+      <button mat-flat-button class="btn btn-bottom" [ngClass]="{'active-filter': isFilterActive(FilterState.COMPLETED)}" (click)="setFilterState(FilterState.COMPLETED)" style="border: solid 2px #481C4B">Fini</button>      
+    </div>    
+    <button mat-flat-button class="btn" (click)="clearCompleted()" style="border: solid 2px #481C4B">Tout supprimer</button>
+  </mat-card-footer>
+  <progress-todo [inputProgressValue]="progressValue"></progress-todo>
+</mat-card>
+
+<mat-card *ngIf="isSmallScreen">
+  <mat-card-content>
+    <div class="filter-container filter-container--mobile">
+      <button mat-flat-button [ngClass]="{'active-filter': isFilterActive(FilterState.ALL)}" (click)="setFilterState(FilterState.ALL)">Tout</button>
+      <button mat-flat-button [ngClass]="{'active-filter': isFilterActive(FilterState.ACTIVE)}" (click)="setFilterState(FilterState.ACTIVE)">En cours</button>
+      <button mat-flat-button [ngClass]="{'active-filter': isFilterActive(FilterState.COMPLETED)}" (click)="setFilterState(FilterState.COMPLETED)">Fini</button>
+    </div>   
+  </mat-card-content>
+</mat-card>
