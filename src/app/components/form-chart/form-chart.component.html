@@ -1,19 +1,22 @@
-<form style="background-color: white;">
-  <mat-form-field>
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline" class="full-width">
     <mat-label>Nom série</mat-label>
-    <input matInput placeholder="Nom du line chart" value="">
+    <input matInput type="text" formControlName="name" name="given-name">
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
     <mat-label>Valeur série</mat-label>
-    <input matInput placeholder="Valeur du line chart">
+    <mat-select formControlName="values" multiple>
+      <mat-option (change)="changeSelect(value)" *ngFor="let value of valueList" [value]="value">{{value}}</mat-option>
+    </mat-select>
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Choisir la date</mat-label>
-    <input matInput [matDatepicker]="picker">
-    <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+  <mat-form-field appearance="outline" class="full-width" *ngFor="let value of myForm.value.values">
+    <mat-label>Choisir la date de : {{value}}</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="date_{{value}}">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker touchUi #picker></mat-datepicker>
   </mat-form-field>
+
+  <button mat-stroked-button type="submit" [disabled]="!myForm.valid" style="width:100%">Soumettre</button>
 </form>
