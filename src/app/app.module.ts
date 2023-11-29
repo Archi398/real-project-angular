@@ -30,6 +30,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
 
 
 
@@ -64,11 +65,9 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
     MatProgressBarModule,
     NgApexchartsModule,
     FormsModule,
-    MatFormFieldModule, 
-    MatInputModule, 
     MatDatepickerModule, 
-    MatNativeDateModule
-
+    MatNativeDateModule,
+    MatSelectModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr'},

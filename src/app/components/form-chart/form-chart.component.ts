@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroupDirective, FormGroup, NgForm, Validators } from '@angular/forms';
 import { AngularFirestore, QuerySnapshot, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
@@ -14,7 +15,18 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   styleUrls: ['./form-chart.component.scss'],
 })
 export class FormChartComponent implements OnChanges {
+  valueList: number[] = [10, 20, 30, 40, 50, 60];
+
   datachart = {};
+
+  myForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    values: new FormControl('', [
+      Validators.required,
+    ]),
+  });
 
   constructor(
     private firestore: AngularFirestore,
@@ -28,5 +40,17 @@ export class FormChartComponent implements OnChanges {
 
   }
 
+
+  onSubmit() {
+    console.log(this.myForm.value)
+  }
+
+  changeSelect(value: number) {
+    this.myForm.addControl(
+      'name', new FormControl('', [
+        Validators.required
+      ]),
+    )
+  }
 
 }
