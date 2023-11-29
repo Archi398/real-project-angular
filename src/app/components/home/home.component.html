@@ -1,7 +1,7 @@
 <app-add-todo (update)="getTodos()"></app-add-todo>
 <mat-card> 
   <mat-card-content>
-    <mat-list role="list" *ngIf="filteredTodos$">
+    <!-- <mat-list role="list" *ngIf="filteredTodos$">
       <mat-list-item role="listitem"  *ngFor="let item of filteredTodos$ | async">
           <ng-container *ngIf="item.isCompleted; else elseBlock">
             <mat-icon class="icon-check" svgIcon="icon-check" (click)="setAsNotCompleted(item)" clickable ></mat-icon>
@@ -16,12 +16,14 @@
             <mat-icon class="icon-cross" svgIcon="icon-cross"></mat-icon>
           </button>
       </mat-list-item>
-    </mat-list>
-    
+    </mat-list> -->
+    <form-chart>
+    </form-chart>
+
   </mat-card-content> 
   <mat-card-footer style="white-space: nowrap;">
     <span>{{totalActiveTodos}} Taches a faire  </span>    
-    <div class="filter-container" *ngIf="!isSmallScreen">
+    <div class="filter-container">
       
       <button mat-flat-button class="btn btn-bottom" [ngClass]="{'active-filter': isFilterActive(FilterState.ALL)}"  (click)="setFilterState(FilterState.ALL)" style="border: solid 2px #481C4B">Tout</button>
       <button mat-flat-button class="btn btn-bottom" [ngClass]="{'active-filter': isFilterActive(FilterState.ACTIVE)}" (click)="setFilterState(FilterState.ACTIVE)" style="border: solid 2px #481C4B">En cours</button>
@@ -31,13 +33,4 @@
   </mat-card-footer>
   <progress-todo [inputProgressValue]="progressValue"></progress-todo>
 </mat-card>
-
-<mat-card *ngIf="isSmallScreen">
-  <mat-card-content>
-    <div class="filter-container filter-container--mobile">
-      <button mat-flat-button [ngClass]="{'active-filter': isFilterActive(FilterState.ALL)}" (click)="setFilterState(FilterState.ALL)">Tout</button>
-      <button mat-flat-button [ngClass]="{'active-filter': isFilterActive(FilterState.ACTIVE)}" (click)="setFilterState(FilterState.ACTIVE)">En cours</button>
-      <button mat-flat-button [ngClass]="{'active-filter': isFilterActive(FilterState.COMPLETED)}" (click)="setFilterState(FilterState.COMPLETED)">Fini</button>
-    </div>   
-  </mat-card-content>
-</mat-card>
+<!-- <div-chart [inputDatachart]="datachart"></div-chart> -->

@@ -5,8 +5,6 @@ import { LoginComponent } from './login.component';
 const MockAuthService = {
   signInWithEmailPassword: () => Promise.resolve(),
   signUpWithEmailPassword: () => Promise.resolve(),
-  signInWithGoogle: () => Promise.resolve(),
-
 };
 
 describe('LoginComponent', () => {

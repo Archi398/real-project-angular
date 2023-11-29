@@ -25,8 +25,8 @@ export class HomeComponent implements OnChanges {
   user: User | null = null;
   FilterState = FilterState;
   activeFilter: BehaviorSubject<FilterState> = new BehaviorSubject<FilterState>(FilterState.ALL);
-  isSmallScreen = false;
   progressValue = 0;
+  datachart = {};
 
   constructor(
     private firestore: AngularFirestore,
@@ -48,12 +48,9 @@ export class HomeComponent implements OnChanges {
         this.getTodos();
       }
     });
-    this.isSmallScreen = breakpointObserver.isMatched('(max-width: 375px)');
-
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('ngOnChanges');
     this.getTodos();
   }
 

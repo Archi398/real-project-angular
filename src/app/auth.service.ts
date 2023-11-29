@@ -27,17 +27,6 @@ export class AuthService {
     });
   }
 
-  async signInWithGoogle() {
-    try {
-      await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-      this.router.navigateByUrl('/');
-    }
-    catch (e) {
-      console.log(e);
-    }
-
-  }
-
   async signInWithEmailPassword(email: string, password: string) {
     try {
       await this.auth.signInWithEmailAndPassword(email, password);

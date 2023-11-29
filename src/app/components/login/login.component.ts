@@ -28,10 +28,6 @@ export class LoginComponent {
     this.router.navigateByUrl('/signup');
   }
 
-  loginWithGoogle() {
-    this.auth.signInWithGoogle();
-  }
-
   getErrorMessage() {
     if (this.email.hasError('required')) {
       return 'You must enter a value';

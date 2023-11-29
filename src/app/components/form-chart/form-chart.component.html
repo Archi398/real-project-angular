@@ -1,0 +1,19 @@
+<form style="background-color: white;">
+  <mat-form-field>
+    <mat-label>Nom série</mat-label>
+    <input matInput placeholder="Nom du line chart" value="">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Valeur série</mat-label>
+    <input matInput placeholder="Valeur du line chart">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Choisir la date</mat-label>
+    <input matInput [matDatepicker]="picker">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</form>
