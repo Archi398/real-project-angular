@@ -1,13 +1,13 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroupDirective, FormGroup, NgForm, Validators } from '@angular/forms';
-import { AngularFirestore, QuerySnapshot, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Component, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from 'src/app/auth.service';
-import { User } from 'src/app/models/user';
-import { map, BehaviorSubject, combineLatest } from 'rxjs';
-import { Todo } from 'src/app/models/todo';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { DataChart } from 'src/app/models/dataChart';
 
+interface FormDate {
+  [key: string]: Date | any;
+}
 
 @Component({
   selector: 'form-chart',
@@ -15,42 +15,80 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   styleUrls: ['./form-chart.component.scss'],
 })
 export class FormChartComponent implements OnChanges {
-  valueList: number[] = [10, 20, 30, 40, 50, 60];
+  numberList: number[] = [10, 20, 30, 40, 50, 60];
+  myForm: FormGroup;
+  listItem = [1];
+  @Output() eventDatachart = new EventEmitter<any>();
 
-  datachart = {};
-
-  myForm = new FormGroup({
-    name: new FormControl('', [
-      Validators.required
-    ]),
-    values: new FormControl('', [
-      Validators.required,
-    ]),
-  });
 
   constructor(
+    private fb: FormBuilder,
     private firestore: AngularFirestore,
     private auth: AuthService,
     private breakpointObserver: BreakpointObserver
   ) {
 
+    this.myForm = new FormGroup({
+      name: new FormControl('', [
+        Validators.required
+      ]),
+      number_1: new FormControl('', [
+        Validators.required,
+      ]),
+      date_1: new FormControl('', [
+        Validators.required,
+      ]),
+    });
   }
-
   ngOnChanges(changes: SimpleChanges) {
 
   }
 
 
   onSubmit() {
-    console.log(this.myForm.value)
+    let data: DataChart = {
+      name: "",
+      numbers: [],
+      dates: [],
+    };;
+
+    data.name = this.myForm.value.name;
+
+    const formDate = this.myForm.value as FormDate;
+    for (const [key, value] of Object.entries(formDate)) {
+      if (key.includes('date')) {
+        data.dates.push(value.toISOString());
+      }
+    }
+
+    for (const [key, value] of Object.entries(this.myForm.value)) {
+      if (key.includes('number')) {
+        data.numbers.push(value);
+      }
+    }
+
+    this.eventDatachart.emit(data);
   }
 
-  changeSelect(value: number) {
+  addValue() {
+    this.fb.group(this.myForm);
+
+    let plusone = this.listItem[this.listItem.length - 1] + 1;
+    this.listItem.push(plusone)
+
     this.myForm.addControl(
-      'name', new FormControl('', [
+      `date_${this.listItem[this.listItem.length - 1]}`, new FormControl('', [
         Validators.required
       ]),
     )
+    this.myForm.addControl(
+      `number_${this.listItem[this.listItem.length - 1]}`, new FormControl('', [
+        Validators.required
+      ]),
+    )
+
+    //this.myForm.removeControl(`date_${event.source.value}`)
+
   }
 
 }

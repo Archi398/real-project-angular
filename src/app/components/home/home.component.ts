@@ -57,6 +57,10 @@ export class HomeComponent implements OnChanges {
   isFilterActive(filterState: FilterState) {
     return this.activeFilter.getValue() === filterState;
   }
+  
+  setDatachart(data: any): void {
+    this.datachart = data;
+  }
 
   getTodos() {
     if (!this.items$) {
