@@ -1,4 +1,4 @@
-<app-add-todo (update)="getTodos()"></app-add-todo>
+<!-- <app-add-todo (update)="getTodos()"></app-add-todo> -->
 <mat-card> 
   <mat-card-content>
     <!-- <mat-list role="list" *ngIf="filteredTodos$">
@@ -21,16 +21,5 @@
     </form-chart>
 
   </mat-card-content> 
-  <mat-card-footer style="white-space: nowrap;">
-    <span>{{totalActiveTodos}} Taches a faire  </span>    
-    <div class="filter-container">
-      
-      <button mat-flat-button class="btn btn-bottom" [ngClass]="{'active-filter': isFilterActive(FilterState.ALL)}"  (click)="setFilterState(FilterState.ALL)" style="border: solid 2px #481C4B">Tout</button>
-      <button mat-flat-button class="btn btn-bottom" [ngClass]="{'active-filter': isFilterActive(FilterState.ACTIVE)}" (click)="setFilterState(FilterState.ACTIVE)" style="border: solid 2px #481C4B">En cours</button>
-      <button mat-flat-button class="btn btn-bottom" [ngClass]="{'active-filter': isFilterActive(FilterState.COMPLETED)}" (click)="setFilterState(FilterState.COMPLETED)" style="border: solid 2px #481C4B">Fini</button>      
-    </div>    
-    <button mat-flat-button class="btn" (click)="clearCompleted()" style="border: solid 2px #481C4B">Tout supprimer</button>
-  </mat-card-footer>
-  <progress-todo [inputProgressValue]="progressValue"></progress-todo>
 </mat-card>
 <div-chart [inputDatachart]="datachart"></div-chart>

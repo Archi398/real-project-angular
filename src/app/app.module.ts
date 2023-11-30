@@ -15,7 +15,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { AddTodoComponent } from './components/add-todo/add-todo.component';
 import { DivChartComponent } from './components/chart/chart.component';
 import { FormChartComponent } from './components/form-chart/form-chart.component';
-import { ProgressBarTodo } from "./components/progress-todo/progress-todo.component";
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -26,7 +25,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from "@angular/common/http";
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -61,8 +59,6 @@ import {MatSelectModule} from '@angular/material/select';
     HttpClientModule,
     LayoutModule,
     MatListModule,
-    ProgressBarTodo,
-    MatProgressBarModule,
     NgApexchartsModule,
     FormsModule,
     MatDatepickerModule, 

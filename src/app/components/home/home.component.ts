@@ -25,7 +25,6 @@ export class HomeComponent implements OnChanges {
   user: User | null = null;
   FilterState = FilterState;
   activeFilter: BehaviorSubject<FilterState> = new BehaviorSubject<FilterState>(FilterState.ALL);
-  progressValue = 0;
   datachart = {};
 
   constructor(
@@ -53,10 +52,6 @@ export class HomeComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.getTodos();
   }
-
-  isFilterActive(filterState: FilterState) {
-    return this.activeFilter.getValue() === filterState;
-  }
   
   setDatachart(data: any): void {
     this.datachart = data;
@@ -71,18 +66,6 @@ export class HomeComponent implements OnChanges {
 
     this.filteredTodos$ = combineLatest(this.items$, this.activeFilter).pipe(
       map(([todos, currentFilter]: [Todo[], FilterState]) => {
-        let total = 0;
-        let notCompleted = 0;
-        this.progressValue = 0;
-
-        todos.forEach(todo => {
-          if(todo.isCompleted){
-            notCompleted = notCompleted + 1;
-          }
-        })
-
-        total = todos.length;
-        this.progressValue = (notCompleted / total) * 100;
 
         if (currentFilter === FilterState.ALL) {
           return todos;
@@ -91,46 +74,11 @@ export class HomeComponent implements OnChanges {
           const filterCondition = currentFilter === FilterState.COMPLETED ? true : false;
           return todo.isCompleted === filterCondition;
         });
-        notCompleted = 0;
-        this.progressValue = 0;
-        todosfiltered.forEach(todo => {
-          if(todo.isCompleted){
-            notCompleted = notCompleted + 1;
-          }
-        })
-
-        total = todosfiltered.length;
-        this.progressValue = (notCompleted / total) * 100 || 0;
         return todosfiltered;
       })
     );
   }
 
-
-  setFilterState(filterState: FilterState) {
-    this.activeFilter.next(filterState);
-  }
-
-  clearCompleted() {
-    if (this.user && this.items$) {
-      this.firestore
-        .collection<Todo>('todos', ref => ref
-          .where('userId', '==', this.user?.uid)
-          .where('isCompleted', '==', true)
-        )
-        .get()
-        .pipe(
-          map((qs: QuerySnapshot<Todo>) => {
-            return qs.docs;
-          })
-        )
-        .subscribe((docs: QueryDocumentSnapshot<Todo>[]) => {
-          docs.forEach((doc: QueryDocumentSnapshot<Todo>) => {
-            doc.ref.delete();
-          });
-        });
-    }
-  }
 
   setAsCompleted(todo: Todo) {
     const todoDoc = this.firestore.doc(`todos/${todo.id}`);
