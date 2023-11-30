@@ -1,4 +1,5 @@
-import { Component, ViewChild, Input } from "@angular/core";
+import { Component, ViewChild, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { DataChart } from 'src/app/models/dataChart';
 
 import {
     ChartComponent,
@@ -24,50 +25,49 @@ export type ChartOptions = {
     templateUrl: "./chart.component.html",
     styleUrls: ["./chart.component.scss"]
 })
-export class DivChartComponent {
+export class DivChartComponent implements OnChanges {
+    @Input() inputDatachart = {};
+    dataChart: DataChart;
     @ViewChild("chart") chart: ChartComponent;
     public chartOptions: Partial<ChartOptions> | any;
 
-    @Input() inputProgressValue = 0;
-
-
     constructor() {
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['inputDatachart']) {
+            this.dataChart = changes['inputDatachart'].currentValue;
+            console.log(this.dataChart);
+        }
+
         this.chartOptions = {
             series: [
                 {
-                    name: "series1",
-                    data: [31, 40, 28, 51, 42, 109, 100]
-                },
-                {
-                    name: "series2",
-                    data: [11, 32, 45, 32, 34, 52, 41]
+                    name: this.dataChart.name,
+                    data: this.dataChart.numbers
                 }
             ],
             chart: {
                 height: 350,
-                type: "area"
+                type: "area",
+                toolbar: {
+                    show: false,
+                }
             },
             dataLabels: {
-                enabled: false
+                enabled: true
             },
             stroke: {
                 curve: "smooth"
             },
             xaxis: {
                 type: "datetime",
-                categories: [
-                    "2018-09-19T00:00:00.000Z",
-                    "2018-09-19T01:30:00.000Z",
-                    "2018-09-19T02:30:00.000Z",
-                    "2018-09-19T03:30:00.000Z",
-                    "2018-09-19T04:30:00.000Z",
-                    "2018-09-19T05:30:00.000Z",
-                    "2018-09-19T06:30:00.000Z"
-                ]
+                categories: this.dataChart.dates
             },
             tooltip: {
+                theme: 'dark',
                 x: {
-                    format: "dd/MM/yy HH:mm"
+                    format: "dd/MM/yyyy"
                 }
             }
         };

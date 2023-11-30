@@ -3,20 +3,22 @@
     <mat-label>Nom série</mat-label>
     <input matInput type="text" formControlName="name" name="given-name">
   </mat-form-field>
+  
+  <div *ngFor="let value of listItem" class="full-width">
+    <mat-form-field appearance="outline">
+      <mat-label>Valeur série</mat-label>
+      <input matInput type="number" formControlName="number_{{value}}">
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline">
+      <mat-label>Choisir la date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date_{{value}}">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <span class="add-btn" (click)="addValue()">Ajouter une autre valeur</span>
 
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Valeur série</mat-label>
-    <mat-select formControlName="values" multiple>
-      <mat-option (change)="changeSelect(value)" *ngFor="let value of valueList" [value]="value">{{value}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" class="full-width" *ngFor="let value of myForm.value.values">
-    <mat-label>Choisir la date de : {{value}}</mat-label>
-    <input matInput [matDatepicker]="picker" formControlName="date_{{value}}">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker touchUi #picker></mat-datepicker>
-  </mat-form-field>
 
   <button mat-stroked-button type="submit" [disabled]="!myForm.valid" style="width:100%">Soumettre</button>
 </form>

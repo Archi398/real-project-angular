@@ -17,7 +17,7 @@
           </button>
       </mat-list-item>
     </mat-list> -->
-    <form-chart>
+    <form-chart (eventDatachart)="setDatachart($event)">
     </form-chart>
 
   </mat-card-content> 
@@ -33,4 +33,4 @@
   </mat-card-footer>
   <progress-todo [inputProgressValue]="progressValue"></progress-todo>
 </mat-card>
-<!-- <div-chart [inputDatachart]="datachart"></div-chart> -->
+<div-chart [inputDatachart]="datachart"></div-chart>
