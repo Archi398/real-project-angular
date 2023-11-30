@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { HeaderComponent } from './header.component';
-import { ThemeService, Theme } from 'src/app/theme.service';
+import { ThemeService, Theme } from 'src/app/services/theme.service';
 import { of } from 'rxjs';
 
 const MockAuthService = {

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { AddTodoComponent } from './add-todo.component';
 import { of } from 'rxjs';
 

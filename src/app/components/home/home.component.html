@@ -1,25 +1,9 @@
 <!-- <app-add-todo (update)="getTodos()"></app-add-todo> -->
-<mat-card> 
+<mat-card>
   <mat-card-content>
-    <!-- <mat-list role="list" *ngIf="filteredTodos$">
-      <mat-list-item role="listitem"  *ngFor="let item of filteredTodos$ | async">
-          <ng-container *ngIf="item.isCompleted; else elseBlock">
-            <mat-icon class="icon-check" svgIcon="icon-check" (click)="setAsNotCompleted(item)" clickable ></mat-icon>
-            <span class="completed">{{item.title}}</span>
-          </ng-container>
-          <ng-template #elseBlock>          
-            <mat-radio-button (change)="setAsCompleted(item)" [checked]="item.isCompleted" [disabled]="item.isCompleted">
-              {{item.title}}
-            </mat-radio-button>
-          </ng-template>
-          <button class="delete-todo-btn" mat-icon-button aria-label="Deleting Todo" (click)="deleteTodo(item)">
-            <mat-icon class="icon-cross" svgIcon="icon-cross"></mat-icon>
-          </button>
-      </mat-list-item>
-    </mat-list> -->
-    <form-chart (eventDatachart)="setDatachart($event)">
+    <form-chart>
     </form-chart>
 
-  </mat-card-content> 
+  </mat-card-content>
 </mat-card>
-<div-chart [inputDatachart]="datachart"></div-chart>
+<div-chart [inputCollectionData]="collectionData"></div-chart>

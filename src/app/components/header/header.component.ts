@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2, Input } from '@angular/core';
-import { ThemeService, Theme } from 'src/app/theme.service';
-import { AuthService } from 'src/app/auth.service';
+import { ThemeService, Theme } from 'src/app/services/theme.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user';
 import { AngularFirestore, QuerySnapshot, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
 import { of } from 'rxjs';

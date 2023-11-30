@@ -26,27 +26,47 @@ export type ChartOptions = {
     styleUrls: ["./chart.component.scss"]
 })
 export class DivChartComponent implements OnChanges {
-    @Input() inputDatachart = {};
-    dataChart: DataChart;
+    @Input() inputCollectionData: any[];
     @ViewChild("chart") chart: ChartComponent;
+
+    collectionDataChart = [];
+
     public chartOptions: Partial<ChartOptions> | any;
 
     constructor() {
     }
 
+
+
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['inputDatachart']) {
-            this.dataChart = changes['inputDatachart'].currentValue;
-            console.log(this.dataChart);
+        if (changes['inputCollectionData']) {
+            this.collectionDataChart = changes['inputCollectionData'].currentValue || [];
         }
 
+        if (this.collectionDataChart.length > 0) {
+            let arraySeries: any[] = [];
+            let arrayDates: any[] = [];
+
+            this.collectionDataChart.forEach((element: any) => {
+                arraySeries.push(
+                    {
+                        name: element.name,
+                        data: element.numbers
+                    }
+                )
+                arrayDates = element.dates;
+            })
+
+            this.initChartOptions(arraySeries, arrayDates);
+        }
+    }
+
+    initChartOptions(series: any[], dates: any[]) {
+        console.log('initChartOptions')
+        console.log(series)
+        console.log(dates)
         this.chartOptions = {
-            series: [
-                {
-                    name: this.dataChart.name,
-                    data: this.dataChart.numbers
-                }
-            ],
+            series: series,
             chart: {
                 height: 350,
                 type: "area",
@@ -62,14 +82,18 @@ export class DivChartComponent implements OnChanges {
             },
             xaxis: {
                 type: "datetime",
-                categories: this.dataChart.dates
+                categories: dates
             },
             tooltip: {
                 theme: 'dark',
                 x: {
                     format: "dd/MM/yyyy"
                 }
+            },
+            legend: {
+                show: true
             }
         };
+        console.log(this.chartOptions)
     }
 }
