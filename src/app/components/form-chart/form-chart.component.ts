@@ -1,7 +1,8 @@
-import { Component, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, SimpleChanges} from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { ChartService } from 'src/app/services/chart.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DataChart } from 'src/app/models/dataChart';
 
@@ -18,14 +19,13 @@ export class FormChartComponent implements OnChanges {
   numberList: number[] = [10, 20, 30, 40, 50, 60];
   myForm: FormGroup;
   listItem = [1];
-  @Output() eventDatachart = new EventEmitter<any>();
-
 
   constructor(
     private fb: FormBuilder,
     private firestore: AngularFirestore,
     private auth: AuthService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private cts: ChartService
   ) {
 
     this.myForm = new FormGroup({
@@ -67,7 +67,7 @@ export class FormChartComponent implements OnChanges {
       }
     }
 
-    this.eventDatachart.emit(data);
+    this.cts.addChart(data);
   }
 
   addValue() {

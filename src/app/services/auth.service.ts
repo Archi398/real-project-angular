@@ -3,8 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { User } from './models/user';
-import { UserData } from './models/userData';
+import { User } from '../models/user';
+import { UserData } from '../models/userData';
 import { Router } from '@angular/router';
 
 @Injectable({
