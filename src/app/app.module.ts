@@ -15,6 +15,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { AddTodoComponent } from './components/add-todo/add-todo.component';
 import { DivChartComponent } from './components/chart/chart.component';
 import { FormChartComponent } from './components/form-chart/form-chart.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -28,9 +29,7 @@ import { MatListModule } from '@angular/material/list';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
-import {MatSelectModule} from '@angular/material/select';
-
-
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -41,7 +40,8 @@ import {MatSelectModule} from '@angular/material/select';
     HeaderComponent,
     AddTodoComponent,
     DivChartComponent,
-    FormChartComponent
+    FormChartComponent,
+    UserSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -61,12 +61,12 @@ import {MatSelectModule} from '@angular/material/select';
     MatListModule,
     NgApexchartsModule,
     FormsModule,
-    MatDatepickerModule, 
+    MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule
   ],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'fr'},
+    { provide: MAT_DATE_LOCALE, useValue: 'fr' },
   ],
   bootstrap: [AppComponent]
 })

@@ -4,6 +4,7 @@ import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/comp
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent    
+  },
+  {
+    path: 'user',
+    component: UserSettingsComponent    
   },
   {
     path: '',
