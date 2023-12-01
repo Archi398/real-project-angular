@@ -4,8 +4,9 @@ import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user';
 import { AngularFirestore, QuerySnapshot, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
 import { of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, filter } from 'rxjs/operators';
 import { UserData } from 'src/app/models/userData';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,7 @@ export class HeaderComponent implements OnInit {
   currentTheme: Theme = Theme.LIGHT;
   currentThemeIcon = 'icon-moon';
   user: User | null = null;
+  condition: Boolean;
 
   @Input()
   pageTitle = '';
@@ -26,6 +28,7 @@ export class HeaderComponent implements OnInit {
     private themeService: ThemeService,
     private auth: AuthService,
     private firestore: AngularFirestore,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +38,11 @@ export class HeaderComponent implements OnInit {
       this.getusername();
     });
 
+    this.router.events
+      .pipe(filter((event: any) => event instanceof NavigationEnd))
+      .subscribe(event => {
+        this.condition = event.url === "/user" ? true : false;
+      });    
   }
 
   initialiseTheme() {
@@ -95,6 +103,14 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.auth.signout();
+  }
+
+  userSettings() {
+    this.router.navigateByUrl('/user');
+  }
+
+  home() {
+    this.router.navigateByUrl('/');
   }
 
 }

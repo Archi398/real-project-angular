@@ -1,5 +1,4 @@
 import { Component, ViewChild, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { DataChart } from 'src/app/models/dataChart';
 
 import {
     ChartComponent,
@@ -62,9 +61,6 @@ export class DivChartComponent implements OnChanges {
     }
 
     initChartOptions(series: any[], dates: any[]) {
-        console.log('initChartOptions')
-        console.log(series)
-        console.log(dates)
         this.chartOptions = {
             series: series,
             chart: {
@@ -94,6 +90,5 @@ export class DivChartComponent implements OnChanges {
                 show: true
             }
         };
-        console.log(this.chartOptions)
     }
 }

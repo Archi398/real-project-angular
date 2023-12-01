@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
         break;
     
       default:
-        this.pageTitle = 'FocusFlow';
+        this.pageTitle = 'GymTracker';
         break;
     }
   }
