@@ -2,11 +2,9 @@ import { Component, OnInit, Renderer2, Input } from '@angular/core';
 import { ThemeService, Theme } from 'src/app/services/theme.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user';
-import { AngularFirestore, QuerySnapshot, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
-import { of } from 'rxjs';
-import { switchMap, filter } from 'rxjs/operators';
-import { UserData } from 'src/app/models/userData';
+import { filter } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-header',
@@ -14,10 +12,10 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  userDataResult: UserData | null = null;
   currentTheme: Theme = Theme.LIGHT;
   currentThemeIcon = 'icon-moon';
   user: User | null = null;
+  username: string = '';
   condition: Boolean;
 
   @Input()
@@ -27,22 +25,26 @@ export class HeaderComponent implements OnInit {
     private renderer: Renderer2,
     private themeService: ThemeService,
     private auth: AuthService,
-    private firestore: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private uds: UserDataService,
   ) { }
 
   ngOnInit(): void {
     this.initialiseTheme();
     this.auth.user$.subscribe((user: User | null) => {
       this.user = user;
-      this.getusername();
     });
 
     this.router.events
       .pipe(filter((event: any) => event instanceof NavigationEnd))
       .subscribe(event => {
         this.condition = event.url === "/user" ? true : false;
-      });    
+      });
+
+    this.uds.getUsernameCurrentUser().subscribe(result => {
+      this.username = result;
+    }
+    );
   }
 
   initialiseTheme() {
@@ -83,21 +85,6 @@ export class HeaderComponent implements OnInit {
       document.querySelector('body')?.style.setProperty('background-color', '#481C4B');
       const logoElement = document.querySelector('.logo') as HTMLImageElement;
       logoElement.src = 'assets/images/logo2.png';
-    }
-  }
-
-  getusername() {
-    try {
-      this.firestore.collection<UserData>('userData', ref => ref.where('userId', '==', this.user?.uid)).get().pipe(
-        switchMap((querySnapshot) => {
-          const doc = querySnapshot.docs[0];
-          return doc ? of(doc.data() as UserData) : of(null);
-        })
-      ).subscribe((data: UserData | null) => {
-        this.userDataResult = data;
-      });
-    } catch (error) {
-      console.log(error);
     }
   }
 

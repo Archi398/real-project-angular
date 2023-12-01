@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, QuerySnapshot } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { User } from '../models/user';
 import { DataChart } from '../models/dataChart';
 import { AuthService } from 'src/app/services/auth.service';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { Observable, from } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, filter, switchMap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -20,7 +19,6 @@ export class ChartService {
   constructor(
     private afs: AngularFirestore,
     private auth: AuthService,
-    private breakpointObserver: BreakpointObserver
   ) {
     this.auth.user$.subscribe((user: User | null) => {
       if (user) {
@@ -28,7 +26,7 @@ export class ChartService {
       }
     });
 
-    this.chartCollection = afs.collection('charts');
+    this.chartCollection = this.afs.collection('charts');
   }
 
   addChart(datachart: any) {
@@ -43,7 +41,13 @@ export class ChartService {
   }
 
   getChartsCurrentUser(): Observable<any[]> {
-    return from(this.chartCollection.ref.where('userId', '==', this.user?.uid).get()).pipe(
+    return this.auth.getUserObservable().pipe(
+      filter(user => !!user),
+      switchMap(user =>
+        this.chartCollection.ref.where(
+          'userId', '==', user?.uid
+        ).get()
+      ),
       map((querySnapshot) => {
         return querySnapshot.docs.map((doc) => {
           const data = doc.data();

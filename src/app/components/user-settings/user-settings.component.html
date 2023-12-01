@@ -1,20 +1,29 @@
 <mat-card>
-    <mat-card-content>
-      <div>
-        <h1>Mettre a jour votre nom d'utilisateur :</h1>
-        <mat-form-field class="full-width" appearance="fill">
-          <mat-label>Nom d'utilisateur</mat-label>
-          <input matInput placeholder="Nom d'utilisateur" value="{{currentUsername}}">
-        </mat-form-field>
-      </div>
-  
-      <div>
-        <h1>Rechercher un ami :</h1>
-        <mat-form-field class="full-width" appearance="fill">
-          <mat-label>Nom d'utilisateur de l'ami</mat-label>
-          <input matInput placeholder="Robert Downey Jr.">
-        </mat-form-field>
-      </div>
-  
-    </mat-card-content>
-  </mat-card>
+  <mat-card-content>
+    <div>
+      <h1>Mettre a jour votre nom d'utilisateur :</h1>
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Nom d'utilisateur</mat-label>
+        <input matInput placeholder="Nom d'utilisateur" value="{{currentUsername}}">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <h1>Rechercher un.e ami.e :</h1>
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Nom d'utilisateur de l'ami</mat-label>
+        <input type="text" matInput #friendInput (keyup)="search(friendInput.value)">
+      </mat-form-field>
+    </div>
+
+
+    <div>
+      <h1>Résultat :</h1>
+      <ul>
+        <li *ngFor="let item of items$ | async">{{item.userId}} / {{item.username}}</li>
+      </ul>
+    </div>
+
+
+  </mat-card-content>
+</mat-card>
