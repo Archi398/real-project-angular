@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { UserData } from '../models/userData';
 import { Router } from '@angular/router';
@@ -18,13 +18,19 @@ export class AuthService {
     private auth: AngularFireAuth,
     private router: Router
   ) {
-    this.userDataCollection = afs.collection<UserData>('userData');
+    this.userDataCollection = this.afs.collection<UserData>('userData');
   }
 
   initialise() {
     this.auth.onAuthStateChanged(user => {
       this.user$.next(user);
     });
+  }
+
+  getUserObservable(): Observable<User | undefined> {
+    return this.auth.authState.pipe(
+      map((user) => user as User | undefined)
+    );
   }
 
   async signInWithEmailPassword(email: string, password: string) {
