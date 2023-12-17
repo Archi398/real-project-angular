@@ -39,17 +39,4 @@ export class HomeComponent {
       }
     });
   }
-
-  // setAsNotCompleted(todo: Todo) {
-  //   const todoDoc = this.firestore.doc(`todos/${todo.id}`);
-  //   todoDoc.update({
-  //     isCompleted: false
-  //   });
-  // }
-
-  // deleteTodo(todo: Todo) {
-  //   const todoDoc = this.firestore.doc(`todos/${todo.id}`);
-  //   todoDoc.delete();
-  // }
-
 }

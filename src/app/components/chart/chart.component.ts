@@ -9,6 +9,7 @@ import {
     ApexTooltip,
     ApexStroke
 } from "ng-apexcharts";
+import { ChartService } from 'src/app/services/chart.service';
 
 export type ChartOptions = {
     series: ApexAxisChartSeries;
@@ -27,12 +28,15 @@ export type ChartOptions = {
 export class DivChartComponent implements OnChanges {
     @Input() inputCollectionData: any[];
     @ViewChild("chart") chart: ChartComponent;
+     dataSeries: any[] = [];
+
 
     collectionDataChart: any[] = [];
 
     public chartOptions: Partial<ChartOptions> | any;
 
-    constructor() {
+    constructor(private cts: ChartService) {
+this.getAllSeries();
     }
 
 
@@ -93,5 +97,19 @@ export class DivChartComponent implements OnChanges {
         };
 
         this.collectionDataChart[index].chartOptions = chartOptions;
+    }
+    getAllSeries() {
+        this.cts.getChartsCurrentUser().subscribe((data) => {
+            this.dataSeries = data;
+        });
+    }
+
+    deleteSelectedSeries() {
+        const selectedSeries = this.dataSeries.filter((series) => series.selected);
+        selectedSeries.forEach((series) => {
+            this.cts.deleteSeries(series.id).subscribe(() => {
+                this.dataSeries = this.dataSeries.filter((s) => s.id !== series.id);
+            });
+        });
     }
 }

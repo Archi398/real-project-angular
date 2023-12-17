@@ -12,7 +12,6 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { HeaderComponent } from './components/header/header.component';
-import { AddTodoComponent } from './components/add-todo/add-todo.component';
 import { DivChartComponent } from './components/chart/chart.component';
 import { FormChartComponent } from './components/form-chart/form-chart.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
@@ -38,7 +37,6 @@ import { MatSelectModule } from '@angular/material/select';
     LoginComponent,
     SignupComponent,
     HeaderComponent,
-    AddTodoComponent,
     DivChartComponent,
     FormChartComponent,
     UserSettingsComponent

@@ -1,24 +1,24 @@
 <mat-card>
-  <mat-card-content *ngIf="uds.friends.length ; else loading;">
+  <mat-card-content *ngIf="uds.username ; else loading;">
     <div>
-      <h1>Mettre a jour votre nom d'utilisateur :</h1>
-      <mat-form-field class="full-width" appearance="fill">
+      <h3>Mettre a jour votre nom d'utilisateur :</h3>
+      <mat-form-field  appearance="fill">
+
         <mat-label>Nom d'utilisateur</mat-label>
         <input #usernameInput matInput placeholder="Nom d'utilisateur" value="{{uds.username}}">
       </mat-form-field>
-      <button (click)="updateUsername(usernameInput.value);">Enregistrer</button>
+      <button class="btn" mat-flat-button (click)="updateUsername(usernameInput.value);">Enregistrer</button>
     </div>
     
     <div>
-      <h1>Liste des mes amis :</h1>
+      <h3>Liste des mes amis :</h3>
       <ul *ngFor="let friend of uds.friends;">
-        <li>Id : {{friend.userId}}</li>
         <li>Nom : {{friend.username}}</li>
       </ul>
     </div>
 
     <div>
-      <h1>Rechercher un.e ami.e :</h1>
+      <h3>Rechercher un.e ami.e :</h3>
       <p>Il faut la valeur exact du username</p>
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Nom d'utilisateur de l'ami</mat-label>
@@ -27,11 +27,10 @@
     </div>
 
     <div>
-      <h1>Résultat :</h1>
+      <h3>Résultat :</h3>
       <ul *ngFor="let item of items$ | async">
-        <li>Id : {{item.userId}}</li>
         <li>Nom : {{item.username}}</li>
-        <li><button (click)="addFriends(item.userId);">Ajouter l'ami : {{item.username}}</button></li>
+        <li><button class="btn-add-friend" mat-flat-button (click)="addFriends(item.userId);">Ajouter l'ami : {{item.username}}</button></li>
       </ul>
     </div>
 

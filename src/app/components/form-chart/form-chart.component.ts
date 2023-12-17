@@ -62,7 +62,7 @@ export class FormChartComponent implements OnChanges {
   }
 
 
-  onSubmit() {
+  async onSubmit() {
     let data: DataChart = {
       name: "",
       numbers: [],
@@ -76,6 +76,7 @@ export class FormChartComponent implements OnChanges {
       if (key.includes('date')) {
         data.dates.push(value.toISOString());
       }
+   
     }
 
     for (const [key, value] of Object.entries(this.myForm.value)) {
@@ -84,12 +85,13 @@ export class FormChartComponent implements OnChanges {
       }
     }
 
-    this.cts.addChart(data);
+    await this.cts.addChart(data);
+
 
     this.myForm.reset();
     Object.keys(this.myForm.controls).forEach(key =>{
       this.myForm.controls[key].setErrors(null)
     });
+   window.location.reload();
   }
-
 }

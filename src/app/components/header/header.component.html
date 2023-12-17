@@ -1,28 +1,26 @@
 <header>
     <nav>
-        <img class="logo" src="../../../assets/images/logo2.png" style="border: solid;" />
-        <h2 *ngIf="!user">GymTracker</h2>
-        <div *ngIf="condition; then thenBlock else elseBlock"></div>
-        <ng-template #thenBlock>
-            <button class="btn" style="border: solid 2px #fff" mat-flat-button (click)="home()">Accueil</button>
-        </ng-template>
-        <ng-template #elseBlock>
-            <button class="btn" style="border: solid 2px #fff" mat-flat-button (click)="userSettings()">Paramètres utilisateur
-            </button>
-        </ng-template>
-        <button class="btn" *ngIf="user" style="border: solid 2px #fff" mat-flat-button (click)="logout()">Déconnexion
-        </button>
+        <div class="navbar">
+            <div class="flex-container">
+                <img class="logo" src="../../../assets/images/logo-fitness.png"  />
+                    <h2>GymTracker</h2>
+                <div class="left-container">
+                    <div *ngIf="condition; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <button class="btn"  mat-flat-button (click)="home()">Accueil</button>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <button class="btn" *ngIf="user" mat-flat-button (click)="userSettings()">Paramètres utilisateur
+                        </button>
+                    </ng-template>
+                    <button class="btn" *ngIf="user"  mat-flat-button (click)="logout()">Déconnexion
+                    </button>
+                </div>
+            </div>
+        </div>
     </nav>
-
-    <div class="page-header-container">
-        <h2>{{pageTitle}}</h2>
-        <button mat-icon-button aria-label="Change Theme" (click)="changeTheme()">
-            <mat-icon class="icon-theme" [svgIcon]="currentThemeIcon"></mat-icon>
-        </button>
-    </div>
-
     <div *ngIf="user">
-        <h4>Salut <span style="color: #e01d5b;">{{ uds.username }}</span> ! Bienvenue sur votre todo list :
+        <h4 class="welcome">Salut <span style="color: rgb(252, 200, 64);"> {{ uds.username }}</span> , Bienvenue sur votre Application GymTracker ! :
         </h4>
     </div>
 
