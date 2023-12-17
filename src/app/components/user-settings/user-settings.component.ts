@@ -9,13 +9,12 @@ import { UserDataService } from 'src/app/services/user-data.service';
   styleUrls: ['./user-settings.component.scss']
 })
 export class UserSettingsComponent {
-  currentUsername = "test pour l'instant";
   searchQuery: string = '';
   items$: Observable<any[]>;
 
   constructor(
     private afs: AngularFirestore,
-    private uds: UserDataService
+    public uds: UserDataService
   ) {
     this.items$ = uds.getUserDataByUsername(this.searchQuery);
   }
@@ -23,5 +22,20 @@ export class UserSettingsComponent {
   search(value: string) {
     this.items$ = this.uds.getUserDataByUsername(value);
   }
+
+  updateUsername(value: string) {
+    this.uds.updateUsernameCurrentUser(value).subscribe(() => {
+    }, error => {
+      console.error('Error updating username:', error);
+    });
+  }
+
+  addFriends(value: string) {
+    this.uds.addFriends(value).subscribe(() => {
+    }, error => {
+      console.error('Error updating friends:', error);
+    });
+  }
+
 
 }

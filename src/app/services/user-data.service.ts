@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, QuerySnapshot } from '@angular/fire/compat/firestore';
 import { AuthService } from 'src/app/services/auth.service';
-import { Observable } from 'rxjs';
-import { map, filter, switchMap } from 'rxjs/operators';
+import { Observable, from, EMPTY } from 'rxjs';
+import { map, filter, switchMap, tap } from 'rxjs/operators';
 import { UserData } from 'src/app/models/userData';
+import { User } from 'src/app/models/user';
 
 
 @Injectable({
@@ -11,13 +12,32 @@ import { UserData } from 'src/app/models/userData';
 })
 export class UserDataService {
   private userDataCollection: AngularFirestoreCollection;
-  test: string = '';
+  currentUser: Observable<User | undefined>;
+  username: string = "";
+  friends: any[] = [];
+
 
   constructor(
     private afs: AngularFirestore,
     private auth: AuthService,
   ) {
     this.userDataCollection = this.afs.collection<any>('userData');
+
+    this.currentUser = this.auth.getUserObservable();
+
+    this.getFriendsCurrentUser().subscribe(result => {
+      result.forEach(element => {
+        this.getUserDataByUserId(element).subscribe(result => {
+          this.friends.push(result[0]);
+        });;
+      })
+    });;
+
+    this.getUsernameCurrentUser().subscribe(result => {
+      this.username = result;
+    });
+
+
   }
 
   getUserDataByUsername(value: string): Observable<any[]> {
@@ -37,9 +57,26 @@ export class UserDataService {
     });
   }
 
+  getUserDataByUserId(value: string): Observable<any[]> {
+    return new Observable((observer) => {
+      this.userDataCollection.ref
+        .where('userId', '==', value)
+        .get()
+        .then((querySnapshot: QuerySnapshot<any>) => {
+          const result = querySnapshot.docs.map((doc) => doc.data());
+          observer.next(result);
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+          observer.complete();
+        });
+    });
+  }
+
 
   getUsernameCurrentUser(): Observable<string> {
-    return this.auth.getUserObservable().pipe(
+    return this.currentUser.pipe(
       filter(user => !!user),
       switchMap(user =>
         this.userDataCollection.ref
@@ -52,6 +89,64 @@ export class UserDataService {
       })
     );
   }
+
+  getFriendsCurrentUser(): Observable<any[]> {
+    return this.currentUser.pipe(
+      filter(user => !!user),
+      switchMap(user =>
+        this.userDataCollection.ref
+          .where('userId', '==', user?.uid)
+          .get()
+      ),
+      map((querySnapshot: QuerySnapshot<any>) => {
+        const result = querySnapshot.docs.map((doc) => doc.data() as UserData);
+        return result.length > 0 ? result[0].friends : [];
+      })
+    );
+  }
+
+  updateUsernameCurrentUser(value: string) {
+    return this.currentUser.pipe(
+      filter(user => !!user),
+      switchMap(user =>
+        this.userDataCollection.ref
+          .where('userId', '==', user?.uid)
+          .get()
+      ),
+      switchMap((querySnapshot: QuerySnapshot<any>) => {
+        const doc = querySnapshot.docs[0];
+        if (doc) {
+          this.username = value;
+          return from(doc.ref.update({ username: value }));
+        } else {
+          return EMPTY;
+        }
+      })
+    );
+  }
+
+  addFriends(value: string) {
+    return this.currentUser.pipe(
+      filter(user => !!user),
+      switchMap(user =>
+        this.userDataCollection.ref
+          .where('userId', '==', user?.uid)
+          .get()
+      ),
+      switchMap((querySnapshot: QuerySnapshot<any>) => {
+        const doc = querySnapshot.docs[0];
+        if (doc) {
+          const currentFriends = doc.data()?.['friends'] || []
+          const updateFriends = [...currentFriends, value]
+
+          return from(doc.ref.update({ friends: updateFriends }));
+        } else {
+          return EMPTY;
+        }
+      })
+    );
+  }
+
 
 
 }
