@@ -16,9 +16,8 @@ interface FormDate {
   styleUrls: ['./form-chart.component.scss'],
 })
 export class FormChartComponent implements OnChanges {
-  numberList: number[] = [10, 20, 30, 40, 50, 60];
   myForm: FormGroup;
-  listItem = [1];
+  listItem = [1, 2, 3, 4];
 
   constructor(
     private fb: FormBuilder,
@@ -36,6 +35,24 @@ export class FormChartComponent implements OnChanges {
         Validators.required,
       ]),
       date_1: new FormControl('', [
+        Validators.required,
+      ]),
+      number_2: new FormControl('', [
+        Validators.required,
+      ]),
+      date_2: new FormControl('', [
+        Validators.required,
+      ]),
+      number_3: new FormControl('', [
+        Validators.required,
+      ]),
+      date_3: new FormControl('', [
+        Validators.required,
+      ]),
+      number_4: new FormControl('', [
+        Validators.required,
+      ]),
+      date_4: new FormControl('', [
         Validators.required,
       ]),
     });
@@ -68,27 +85,11 @@ export class FormChartComponent implements OnChanges {
     }
 
     this.cts.addChart(data);
-  }
 
-  addValue() {
-    this.fb.group(this.myForm);
-
-    let plusone = this.listItem[this.listItem.length - 1] + 1;
-    this.listItem.push(plusone)
-
-    this.myForm.addControl(
-      `date_${this.listItem[this.listItem.length - 1]}`, new FormControl('', [
-        Validators.required
-      ]),
-    )
-    this.myForm.addControl(
-      `number_${this.listItem[this.listItem.length - 1]}`, new FormControl('', [
-        Validators.required
-      ]),
-    )
-
-    //this.myForm.removeControl(`date_${event.source.value}`)
-
+    this.myForm.reset();
+    Object.keys(this.myForm.controls).forEach(key =>{
+      this.myForm.controls[key].setErrors(null)
+    });
   }
 
 }

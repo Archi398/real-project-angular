@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, QuerySnapshot } from '@angular/fire/compat/firestore';
 import { User } from '../models/user';
 import { DataChart } from '../models/dataChart';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,7 +14,6 @@ export class ChartService {
   private chartCollection: AngularFirestoreCollection;
   user: User | null = null;
   dataChart: DataChart | null = null;
-
 
   constructor(
     private afs: AngularFirestore,
@@ -56,6 +55,24 @@ export class ChartService {
         });
       })
     );
+  }
+
+  getChartsByUserId(id: string): Observable<any[]> {
+    return new Observable((observer) => {
+      this.chartCollection.ref
+        .where('userId', '==', id)
+        .get()
+        .then((querySnapshot: QuerySnapshot<any>) => {
+          const result = querySnapshot.docs.map((doc) => doc.data());
+          observer.next(result);
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+          observer.complete();
+        });
+    });
+
   }
 
 }

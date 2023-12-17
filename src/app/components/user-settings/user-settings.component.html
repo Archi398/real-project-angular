@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-content>
+  <mat-card-content *ngIf="uds.friends.length ; else loading;">
     <div>
       <h1>Mettre a jour votre nom d'utilisateur :</h1>
       <mat-form-field class="full-width" appearance="fill">
@@ -19,6 +19,7 @@
 
     <div>
       <h1>Rechercher un.e ami.e :</h1>
+      <p>Il faut la valeur exact du username</p>
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Nom d'utilisateur de l'ami</mat-label>
         <input type="text" matInput #friendInput (keyup)="search(friendInput.value)">
@@ -36,4 +37,5 @@
 
 
   </mat-card-content>
+  <ng-template #loading>Chargement ...</ng-template>
 </mat-card>

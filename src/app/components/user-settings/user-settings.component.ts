@@ -32,6 +32,7 @@ export class UserSettingsComponent {
 
   addFriends(value: string) {
     this.uds.addFriends(value).subscribe(() => {
+      this.uds.updateFriendsList();
     }, error => {
       console.error('Error updating friends:', error);
     });
