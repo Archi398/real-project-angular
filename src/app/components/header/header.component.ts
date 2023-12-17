@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
     private themeService: ThemeService,
     private auth: AuthService,
     private router: Router,
-    private uds: UserDataService,
+    public uds: UserDataService,
   ) { }
 
   ngOnInit(): void {
@@ -41,10 +41,6 @@ export class HeaderComponent implements OnInit {
         this.condition = event.url === "/user" ? true : false;
       });
 
-    this.uds.getUsernameCurrentUser().subscribe(result => {
-      this.username = result;
-    }
-    );
   }
 
   initialiseTheme() {

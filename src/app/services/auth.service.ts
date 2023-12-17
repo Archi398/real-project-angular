@@ -50,7 +50,8 @@ export class AuthService {
       let returndata = await this.auth.createUserWithEmailAndPassword(email, password);
       this.userDataCollection.add({
         username: username,
-        userId: returndata.user?.uid
+        userId: returndata.user?.uid,
+        friends: []
       });
       this.router.navigateByUrl('/');
     }
