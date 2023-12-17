@@ -15,6 +15,7 @@ export class UserDataService {
   currentUser: Observable<User | undefined>;
   username: string = "";
   friends: any[] = [];
+  arrayIdFriends: string[] = [];
 
 
   constructor(
@@ -25,19 +26,25 @@ export class UserDataService {
 
     this.currentUser = this.auth.getUserObservable();
 
-    this.getFriendsCurrentUser().subscribe(result => {
-      result.forEach(element => {
-        this.getUserDataByUserId(element).subscribe(result => {
-          this.friends.push(result[0]);
-        });;
-      })
-    });;
+    this.updateFriendsList();
 
     this.getUsernameCurrentUser().subscribe(result => {
       this.username = result;
     });
 
 
+  }
+
+  updateFriendsList(){
+    this.friends = [];
+    this.getFriendsCurrentUser().subscribe(result => {
+      this.arrayIdFriends = result;
+      result.forEach(element => {
+        this.getUserDataByUserId(element).subscribe(result => {
+          this.friends.push(result[0]);
+        });;
+      })
+    });;
   }
 
   getUserDataByUsername(value: string): Observable<any[]> {
@@ -88,6 +95,26 @@ export class UserDataService {
         return result.length > 0 ? result[0].username : '';
       })
     );
+  }
+
+  async getUsernameById(userId: string): Promise<string> {
+    try {
+      const querySnapshot = await from(
+        this.userDataCollection.ref
+          .where('userId', '==', userId)
+          .get()
+      ).toPromise();
+  
+      if (querySnapshot) {
+        const result = querySnapshot.docs.map((doc) => doc.data() as UserData);
+        return result.length > 0 ? result[0].username : '';  
+      }else{
+        return '';
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      return ''; // Return a default value or handle the error accordingly
+    }
   }
 
   getFriendsCurrentUser(): Observable<any[]> {

@@ -28,7 +28,7 @@ export class DivChartComponent implements OnChanges {
     @Input() inputCollectionData: any[];
     @ViewChild("chart") chart: ChartComponent;
 
-    collectionDataChart = [];
+    collectionDataChart: any[] = [];
 
     public chartOptions: Partial<ChartOptions> | any;
 
@@ -40,28 +40,29 @@ export class DivChartComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['inputCollectionData']) {
             this.collectionDataChart = changes['inputCollectionData'].currentValue || [];
+            if (this.collectionDataChart.length > 0) {
+                this.collectionDataChart.forEach((chart: any[], index) => {
+                    let arraySeries: any[] = [];
+                    let arrayDates: any[] = [];
+                    chart.forEach((element: any) => {
+                        arraySeries.push(
+                            {
+                                name: element.name,
+                                data: element.numbers
+                            }
+                        )
+                        arrayDates = element.dates;
+                    })
+
+                    this.initChartOptions(index, arraySeries, arrayDates);
+                });
+            }
         }
 
-        if (this.collectionDataChart.length > 0) {
-            let arraySeries: any[] = [];
-            let arrayDates: any[] = [];
-
-            this.collectionDataChart.forEach((element: any) => {
-                arraySeries.push(
-                    {
-                        name: element.name,
-                        data: element.numbers
-                    }
-                )
-                arrayDates = element.dates;
-            })
-
-            this.initChartOptions(arraySeries, arrayDates);
-        }
     }
 
-    initChartOptions(series: any[], dates: any[]) {
-        this.chartOptions = {
+    initChartOptions(index: number, series: any[], dates: any[]) {
+        let chartOptions = {
             series: series,
             chart: {
                 height: 350,
@@ -90,5 +91,7 @@ export class DivChartComponent implements OnChanges {
                 show: true
             }
         };
+
+        this.collectionDataChart[index].chartOptions = chartOptions;
     }
 }
