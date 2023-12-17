@@ -22,7 +22,7 @@ Pour lancer l'application faites
 
 ## Utiliser l'application
 
-- Lorsque vous arrivez sur l'application créez vous un compte et vous serez prèts à l'utiliser
+- Lorsque vous arrivez sur l'application créez vous un compte (avec un mot de passe d'au moins 6 caractères pour la sécurité avec firebase) et vous serez prèts à l'utiliser 
 - Pour utiliser la fonction des amis et voir leur graphique veuillez utiliser l'utilisateur "test" ou alors vous pouvez créer votre propre utilisateur ami en créant un deuxième compte
 
 
