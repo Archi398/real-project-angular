@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initialiseTheme();
+    
     this.auth.user$.subscribe((user: User | null) => {
       this.user = user;
     });
@@ -43,46 +43,7 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  initialiseTheme() {
-    this.currentTheme = this.themeService.getCurrentTheme();
-    if (this.currentTheme === Theme.LIGHT) {
-      this.currentThemeIcon = 'icon-moon';
-      document.querySelector('body')?.style.setProperty('background-color', '#481C4B');
-      const logoElement = document.querySelector('.logo') as HTMLImageElement;
-      logoElement.src = 'assets/images/logo2.png';
-    }
-    if (this.currentTheme === Theme.DARK) {
-      this.currentThemeIcon = 'icon-sun';
-      this.renderer.addClass(document.body, 'dark-theme');
-      document.querySelector('body')?.style.setProperty('background-color', '#222222');
-      const logoElement = document.querySelector('.logo') as HTMLImageElement;
-      logoElement.src = 'assets/images/logodark.png';
-      logoElement.style.setProperty('border-color', '#ffffff');
-      logoElement.style.setProperty('border', 'solid');
-    }
-  }
 
-  changeTheme() {
-    if (this.currentTheme === Theme.LIGHT) {
-      this.themeService.setThemeToStorage(Theme.DARK);
-      this.currentTheme = Theme.DARK;
-      this.currentThemeIcon = 'icon-sun';
-      this.renderer.addClass(document.body, 'dark-theme');
-      document.querySelector('body')?.style.setProperty('background-color', '#222222');
-      const logoElement = document.querySelector('.logo') as HTMLImageElement;
-      logoElement.src = 'assets/images/logodark.png';
-      logoElement.style.setProperty('border-color', '#ffffff');
-      logoElement.style.setProperty('border', 'solid');
-    } else {
-      this.themeService.setThemeToStorage(Theme.LIGHT);
-      this.currentTheme = Theme.LIGHT;
-      this.currentThemeIcon = 'icon-moon';
-      this.renderer.removeClass(document.body, 'dark-theme');
-      document.querySelector('body')?.style.setProperty('background-color', '#481C4B');
-      const logoElement = document.querySelector('.logo') as HTMLImageElement;
-      logoElement.src = 'assets/images/logo2.png';
-    }
-  }
 
   logout() {
     this.auth.signout();

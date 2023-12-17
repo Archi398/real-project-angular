@@ -28,14 +28,16 @@ export class ChartService {
     this.chartCollection = this.afs.collection('charts');
   }
 
-  addChart(datachart: any) {
+addChart(datachart: any): Promise<any> | undefined {
     if (datachart && this.user) {
-      this.chartCollection.add({
+      return this.chartCollection.add({
         name: datachart.name,
         numbers: datachart.numbers,
         dates: datachart.dates,
         userId: this.user.uid
       });
+    }else{
+      return;
     }
   }
 
@@ -73,6 +75,19 @@ export class ChartService {
         });
     });
 
+  }
+ deleteSeries(seriesId: string): Observable<void> {
+    return new Observable((observer) => {
+      this.chartCollection.doc(seriesId).delete()
+        .then(() => {
+          observer.next();
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+          observer.complete();
+        });
+    });
   }
 
 }

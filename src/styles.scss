@@ -49,12 +49,7 @@ body {
     color: white;
     background-color: #e01d5b;
 }
- h2 {
-    letter-spacing: 2px !important;
-    font-size: 30px !important;
-    font-weight: 700 !important;
-    color: #ffffff !important;
-}
+
 @keyframes zoomIn {
   from {
     transform: scale(1);
@@ -66,4 +61,22 @@ body {
 
 .zoom-in {
   animation: zoomIn 0.3s ease;
+}
+
+.btn {
+    border: solid 2px !important;
+    border-color: rgb(252, 200, 64) !important;
+    color: rgb(252, 200, 64);
+    background-color: rgb(34, 39, 37);
+margin-left: 20px !important;
+
+}
+.btn-add-friend {
+    border: solid 2px !important;
+    border-color: rgb(252, 200, 64) !important;
+    color: rgb(252, 200, 64);
+    background-color: rgb(34, 39, 37);
+}
+h3{
+color: rgb(252, 200, 64) !important;
 }

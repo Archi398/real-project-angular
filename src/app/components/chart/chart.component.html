@@ -1,5 +1,13 @@
+<h3> Supprimer une/des series deja existantes</h3>
+<div *ngFor="let series of dataSeries" style="margin-bottom: 20px;">
+  <label>
+    <input type="checkbox" [(ngModel)]="series.selected" /> {{ series.name }}
+  </label>
+</div>
+<button class="btn"  mat-flat-button (click)="deleteSelectedSeries()" style="margin-bottom: 20px;">Supprimer les séries sélectionnées</button>
 <div *ngFor="let chart of collectionDataChart;">
   <h1>{{chart[0].username == "moi" ? "Mon graphique :" : "Graphique de : " + chart[0].username }}</h1>
+
   <div id="chart" *ngIf="chart.chartOptions">
     <apx-chart 
       [series]="chart.chartOptions.series" 

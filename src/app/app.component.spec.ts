@@ -30,10 +30,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'angular-firebase-todo'`, () => {
+  it(`should have as title 'gymtracker'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-firebase-todo');
+    expect(app.title).toEqual('gymtracker');
   });
 
 
