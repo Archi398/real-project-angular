@@ -10,7 +10,7 @@
                         <button class="btn"  mat-flat-button (click)="home()">Accueil</button>
                     </ng-template>
                     <ng-template #elseBlock>
-                        <button class="btn"  mat-flat-button (click)="userSettings()">Paramètres utilisateur
+                        <button class="btn" *ngIf="user" mat-flat-button (click)="userSettings()">Paramètres utilisateur
                         </button>
                     </ng-template>
                     <button class="btn" *ngIf="user"  mat-flat-button (click)="logout()">Déconnexion
