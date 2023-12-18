@@ -14,18 +14,6 @@ span {
 mat-list-item {
     position: relative;
     border-bottom: 1px solid #dfdfdf;
-
-    .delete-todo-btn {
-        display: none;
-        position: absolute;
-        right: 0;
-    }
-
-    &:hover {
-        .delete-todo-btn {
-            display: inline;
-        }
-    }
 }
 
 mat-card-footer {
@@ -45,20 +33,6 @@ mat-card-footer {
 
 mat-radio-button {
     color: white;
-}
-
-.filter-container {
-    button {
-        padding: 0 2px;
-
-        &.active-filter {
-            color: #481C4B;
-        }
-    }
-
-    &.filter-container--mobile {
-        margin-top: 1rem;
-    }
 }
 
 .btn-bottom {

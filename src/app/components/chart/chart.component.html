@@ -1,21 +1,16 @@
-<h3> Supprimer une/des series deja existantes</h3>
-<div *ngFor="let series of dataSeries" style="margin-bottom: 20px;">
-  <label>
-    <input type="checkbox" [(ngModel)]="series.selected" /> {{ series.name }}
-  </label>
-</div>
-<button class="btn"  mat-flat-button (click)="deleteSelectedSeries()" style="margin-bottom: 20px;">Supprimer les séries sélectionnées</button>
-<div *ngFor="let chart of collectionDataChart;">
-  <h1>{{chart[0].username == "moi" ? "Mon graphique :" : "Graphique de : " + chart[0].username }}</h1>
+<div style="margin: 0 10% 0 10%;">
+  <h1>Liste des graphique ici : </h1>
+  <div class="container-chart">
+    <div *ngFor="let chart of collectionDataChart;">
+      <h2>{{chart[0].username == "moi" ? "Mon graphique :" : "Graphique de : " + chart[0].username }}</h2>
 
-  <div id="chart" *ngIf="chart.chartOptions">
-    <apx-chart 
-      [series]="chart.chartOptions.series" 
-      [chart]="chart.chartOptions.chart" 
-      [xaxis]="chart.chartOptions.xaxis"
-      [stroke]="chart.chartOptions.stroke" 
-      [tooltip]="chart.chartOptions.tooltip"
-      [dataLabels]="chart.chartOptions.dataLabels">
-    </apx-chart>
+      <div id="chart" *ngIf="chart.chartOptions">
+        <apx-chart [series]="chart.chartOptions.series" [chart]="chart.chartOptions.chart"
+          [xaxis]="chart.chartOptions.xaxis" [stroke]="chart.chartOptions.stroke" [tooltip]="chart.chartOptions.tooltip"
+          [dataLabels]="chart.chartOptions.dataLabels">
+        </apx-chart>
+      </div>
+    </div>
+    <h2 *ngIf="collectionDataChart.length == 0">Ajouter au moins une serie pour voir vos graphique</h2>
   </div>
 </div>

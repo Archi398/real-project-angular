@@ -28,7 +28,6 @@ export type ChartOptions = {
 export class DivChartComponent implements OnChanges {
     @Input() inputCollectionData: any[];
     @ViewChild("chart") chart: ChartComponent;
-     dataSeries: any[] = [];
 
 
     collectionDataChart: any[] = [];
@@ -36,7 +35,7 @@ export class DivChartComponent implements OnChanges {
     public chartOptions: Partial<ChartOptions> | any;
 
     constructor(private cts: ChartService) {
-this.getAllSeries();
+        
     }
 
 
@@ -97,19 +96,5 @@ this.getAllSeries();
         };
 
         this.collectionDataChart[index].chartOptions = chartOptions;
-    }
-    getAllSeries() {
-        this.cts.getChartsCurrentUser().subscribe((data) => {
-            this.dataSeries = data;
-        });
-    }
-
-    deleteSelectedSeries() {
-        const selectedSeries = this.dataSeries.filter((series) => series.selected);
-        selectedSeries.forEach((series) => {
-            this.cts.deleteSeries(series.id).subscribe(() => {
-                this.dataSeries = this.dataSeries.filter((s) => s.id !== series.id);
-            });
-        });
     }
 }

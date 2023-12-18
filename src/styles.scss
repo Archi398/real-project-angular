@@ -2,65 +2,37 @@
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { 
-    height: 100%; 
+html,
+body {
+    height: 100%;
     font-size: 18px;
     box-sizing: border-box;
 }
-body { 
+
+body {
     color: white !important;
-    margin: 0; 
-    font-family: "Josefin Sans", "Helvetica Neue", sans-serif; 
+    margin: 0;
+    font-family: "Josefin Sans", "Helvetica Neue", sans-serif;
     background-repeat: no-repeat;
-   
-}
 
-.mat-form-field-underline {
-    display: none;
-}
-
-.mat-form-field-wrapper {
-    padding: 0;
-}
-
-.icon-check {
-    border-radius: 90px;
-    background: linear-gradient(#E01D5B, #481C4B);
-    position: relative;
-    svg {
-        position: absolute;
-        top: 8px;
-        left: 6px;
-    }
 }
 
 .mat-card {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    color: white !important;
+    background-color: rgb(34, 39, 37) !important;
 }
 
 .mat-input-placeholder {
     color: white !important;
 }
+
 .btn {
     color: white;
     background-color: #e01d5b;
 }
 
-@keyframes zoomIn {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.2);
-  }
-}
-
 .zoom-in {
-  animation: zoomIn 0.3s ease;
+    animation: zoomIn 0.3s ease;
 }
 
 .btn {
@@ -68,20 +40,28 @@ body {
     border-color: rgb(252, 200, 64) !important;
     color: rgb(252, 200, 64);
     background-color: rgb(34, 39, 37);
-margin-left: 20px !important;
-
+    margin-left: 20px !important;
 }
+
 .btn-add-friend {
     border: solid 2px !important;
     border-color: rgb(252, 200, 64) !important;
     color: rgb(252, 200, 64);
     background-color: rgb(34, 39, 37);
 }
-h3{
-color: rgb(252, 200, 64) !important;
-}
-.mat-flat-button {
-min-width: auto !important;
-padding: 0 8px !important;
 
+h3 {
+    color: rgb(252, 200, 64) !important;
+}
+
+.mat-flat-button {
+    min-width: auto !important;
+    padding: 0 8px !important;
+}
+
+.box {
+    background-color: #5d6361 !important;
+    border-radius: 10px !important;
+    padding: 25px !important;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
 }
