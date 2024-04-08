@@ -18,6 +18,7 @@ interface FormDate {
 export class FormChartComponent implements OnChanges {
   myForm: FormGroup;
   listItem = [1, 2, 3, 4];
+  dataSeries: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -26,6 +27,7 @@ export class FormChartComponent implements OnChanges {
     private breakpointObserver: BreakpointObserver,
     private cts: ChartService
   ) {
+    this.getAllSeries();
 
     this.myForm = new FormGroup({
       name: new FormControl('', [
@@ -94,4 +96,20 @@ export class FormChartComponent implements OnChanges {
     });
    window.location.reload();
   }
+
+  getAllSeries() {
+    this.cts.getChartsCurrentUser().subscribe((data) => {
+        this.dataSeries = data;
+    });
+}
+
+deleteSelectedSeries() {
+    const selectedSeries = this.dataSeries.filter((series) => series.selected);
+    selectedSeries.forEach((series) => {
+        this.cts.deleteSeries(series.id).subscribe(() => {
+            this.dataSeries = this.dataSeries.filter((s) => s.id !== series.id);
+        });
+    });
+}
+
 }

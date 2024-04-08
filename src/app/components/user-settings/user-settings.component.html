@@ -1,40 +1,42 @@
-<mat-card>
-  <mat-card-content *ngIf="uds.username ; else loading;">
-    <div>
-      <h3>Mettre a jour votre nom d'utilisateur :</h3>
-      <mat-form-field  appearance="fill">
+<mat-card style="display: flex; justify-content: center;">
+  <div class="box">
+    <mat-card-content *ngIf="uds.username ; else loading;" style="display: flex;">
+      <div class="container-us">
+        <h3>Mettre a jour votre nom d'utilisateur :</h3>
+        <mat-form-field appearance="fill">
 
-        <mat-label>Nom d'utilisateur</mat-label>
-        <input #usernameInput matInput placeholder="Nom d'utilisateur" value="{{uds.username}}">
-      </mat-form-field>
-      <button class="btn" mat-flat-button (click)="updateUsername(usernameInput.value);">Enregistrer</button>
-    </div>
-    
-    <div>
-      <h3>Liste des mes amis :</h3>
-      <ul *ngFor="let friend of uds.friends;">
-        <li>Nom : {{friend.username}}</li>
-      </ul>
-    </div>
+          <mat-label>Nom d'utilisateur</mat-label>
+          <input #usernameInput matInput placeholder="Nom d'utilisateur" value="{{uds.username}}">
+        </mat-form-field>
+        <br>
+        <button class="btn btn-us" mat-flat-button (click)="updateUsername(usernameInput.value);">Enregistrer</button>
+      </div>
+      <hr>
+      <div class="container-us">
+        <h3>Liste des mes amis :</h3>
+        <ul *ngFor="let friend of uds.friends;">
+          <li>Nom : {{friend.username}}</li>
+        </ul>
+      </div>
+      <hr>
+      <div class="container-us">
+        <h3>Rechercher un.e ami.e :</h3>
+        <p>Il faut la valeur exact du username</p>
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Nom d'utilisateur de l'ami</mat-label>
+          <input type="text" matInput #friendInput (keyup)="search(friendInput.value)">
+        </mat-form-field>
+      
+        <h3>Résultat :</h3>
+        <ul *ngFor="let item of items$ | async">
+          <li>Nom : {{item.username}}</li>
+          <li><button class="btn-add-friend" mat-flat-button (click)="addFriends(item.userId);">Ajouter l'ami :
+              {{item.username}}</button></li>
+        </ul>
+      </div>
 
-    <div>
-      <h3>Rechercher un.e ami.e :</h3>
-      <p>Il faut la valeur exact du username</p>
-      <mat-form-field class="full-width" appearance="fill">
-        <mat-label>Nom d'utilisateur de l'ami</mat-label>
-        <input type="text" matInput #friendInput (keyup)="search(friendInput.value)">
-      </mat-form-field>
-    </div>
 
-    <div>
-      <h3>Résultat :</h3>
-      <ul *ngFor="let item of items$ | async">
-        <li>Nom : {{item.username}}</li>
-        <li><button class="btn-add-friend" mat-flat-button (click)="addFriends(item.userId);">Ajouter l'ami : {{item.username}}</button></li>
-      </ul>
-    </div>
-
-
-  </mat-card-content>
-  <ng-template #loading>Chargement ...</ng-template>
+    </mat-card-content>
+    <ng-template #loading>Chargement ...</ng-template>
+  </div>
 </mat-card>

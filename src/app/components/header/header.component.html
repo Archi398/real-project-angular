@@ -4,7 +4,7 @@
             <div class="flex-container">
                 <img class="logo" src="../../../assets/images/logo-fitness.png"  />
                     <h2>GymTracker</h2>
-                <div class="left-container">
+                <div>
                     <div *ngIf="condition; then thenBlock else elseBlock"></div>
                     <ng-template #thenBlock>
                         <button class="btn"  mat-flat-button (click)="home()">Accueil</button>
@@ -20,7 +20,7 @@
         </div>
     </nav>
     <div *ngIf="user">
-        <h4 class="welcome">Salut <span style="color: rgb(252, 200, 64);"> {{ uds.username }}</span> , Bienvenue sur votre Application GymTracker ! :
+        <h4 class="welcome">Salut &nbsp;<span style="color: rgb(252, 200, 64);"> {{ uds.username }}</span> , Bienvenue sur votre Application GymTracker ! :
         </h4>
     </div>
 
